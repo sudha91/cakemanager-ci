@@ -1,1 +1,1 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sudha91/cakemanager-ci/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sudha91/cakemanager-ci/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sudha91/cakemanager-ci/tree/circleci-project-setup.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sudha91/cakemanager-ci/tree/circleci-project-setup)
