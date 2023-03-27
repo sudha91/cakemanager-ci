@@ -12,6 +12,8 @@ jobs:
     # Be sure to update the Docker image tag below to openjdk version of your application.
     # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/openjdk
     working_directory: ~/cakemanagerapp # directory where steps will run
+    environment:
+      MAVEN_OPTS: -Xmx6400m
     docker:
       - image: 'cimg/openjdk:17.0'
 
@@ -23,16 +25,24 @@ jobs:
       - checkout
       # Use mvn clean and package as the standard maven build phase
       
-      - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: cakemanagerapp-{{ checksum "pom.xml" }}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run: mvn dependency:go-offline # gets the project dependencies
-
-      - save_cache: # saves the project dependencies
+      ## cache the dependencies
+      - save_cache:
           paths:
             - ~/.m2
-          key: cakemanagerapp-{{ checksum "pom.xml" }}
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      - run:
+          name: Set permissions
+          command: chmod +x mvnw
+
+      - setup_remote_docker:
+          version: 20.10.12
 
        # Download and cache dependencies
       - run:
