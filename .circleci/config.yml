@@ -5,7 +5,6 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0
-    working_directory: ~/repo
     environment:
       MAVEN_OPTS: -Xmx6400m
     steps:
@@ -15,22 +14,14 @@ jobs:
       ## Restore any files that may have been cached from previous jobs
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - sortpom-cache-{{ checksum "pom.xml" }}
+            - sortpom-cache- # fallback in case previous cache key is not found
 
       ## cache the dependencies
       - save_cache:
           paths:
             - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
-
-      - run:
-          name: Set permissions
-          command: chmod +x mvnw
-
-      - setup_remote_docker:
-          version: 20.10.12
+          key: sortpom-cache--{{ checksum "pom.xml" }}
 
       - run:
           name: Run unit tests
