@@ -17,6 +17,14 @@ The cakemanager micro service provides the following features:
 
 7. The application has been authenticated using the Spring security keeping in mind seperation of concerns
 
+- A role of manager with username manager and password manager123 has been added to access the endpoints Update an existing cake and add a new cake(along with User role)
+- A role of user with username user and password user123 has been added who is authorized to get the list of cakes in the system
+- A role of admin with username admin and password admin123 has been added who has access to deleting an existing cake(along with user role)
+
+Any access to endpoint with unauthorized role throws an 403 Forbidden exception
+
+The details above could be used for logging into the application
+
 8. Continous integration on the Circle CI system has been added to provide the stable build on the repo
 
 The latest build details can be found below:
